@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
+    <script type="text/javascript" src="static/js/index.js"></script>
+    <link rel="icon" href="/static/images/icon-park-degree-hat@2x.svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Titan Seller</title>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="title"><a href="/home"> <img class="hat-icon" src="{{ url_for('static', filename='images/icon-park-degree-hat@2x.svg') }}" /> <div style="float: right; margin-left: 16px; font-size: 32px;">Titan Seller</div> </a></div>
+
+        {% if user_data == None %}
+            <button class="button" onclick="location.href='/login';">Login/Signup</button>
+        {% else %}
+            <div class="dropdown">
+                <!-- <img class="profile-icon" src="static/images/healthicons-ui-user-profile@2x.svg" /> -->
+                <div class="dropdown-content">
+                    <div class="drop-btn" onclick="location.href='/manage';">Dashboard</div>
+                    <div class="drop-btn" style="padding-top: 7px;" onclick="location.href='/sell';">List Item</div>
+                    <div class="drop-btn" style="padding-bottom: 7px; padding-top: 7px;" onclick="location.href='/chat';">Messages</div>
+                    <div class="drop-btn" onclick="location.href='/logout';">Logout</div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    {% block content %}{% endblock %}
+
+
+<footer>
+    <div>Copyright 2022 Titan Seller</div>
+</footer>
+</body>
+
+</html>
