@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/old_style.css') }}">
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="forms" style="height: 440px !important;">
+            <div class="form login">
+                <span class="title">Login</span>
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <div class="notification is-danger">
+                {{ messages[0] }}
+                </div>
+                {% endif %}
+                {% endwith %}
+                <form method="POST">
+                    <div class="input-field">
+                        <input type="email" id="email" name="email" placeholder="Enter your email" autocomplete="off" required>
+                        <i class="uil uil-envelope icon"></i>
+                    </div>
+                    <div class="input-field">
+                        <input type="password" id="password" name="password" placeholder="Enter your password" autocomplete="off" required>
+                        <i class="uil uil-lock icon"></i>
+                    </div>
+                    <div class="input-field button">
+                        <div><button class="input-field button" type="button" id='btn' onclick="post()">Login</button></div>
+                    </div>
+                    <div class="login-signup">
+                        <span class="text">Not a member?
+                          <a href="/sign_up" class="text signup-link">Signup Now</a>
+                          <br>
+                          <a href="/home" class="text login-link">Home Page</a>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    button = document.getElementById('password');
+        button.addEventListener("keyup", (e) => {
+            console.log("press")
+            if (e.keyCode === 13) {
+                console.log("ran");
+                document.getElementById('btn').click();
+            }
+        });
+
+    function post() {
+            button = document.getElementById('btn');
+            button.disabled=true;
+            if (button.form.reportValidity()) {
+                button.form.submit(); 
+            }
+            else button.disabled=false;
+        }
+</script>
+
+</html>

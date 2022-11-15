@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+{% block content %}
+    <head><link rel="stylesheet" href="{{ url_for('static', filename='css/create_item.css') }}"></head>
+    {% include "dashboard.html" %}
+    <form method="POST" enctype="multipart/form-data" id="form">
+        <div class="container">
+            <div class="card">
+                <label>Upload Photo</label>
+                <div class="drop_box">
+                    <header>
+                        <h4>Select File here</h4>
+                    </header>
+                    <p>Files Supported: PNG, JPEG</p>
+                    <div class="btn-wrapper">
+                        <label for="photo">Upload Image</label>
+                        <input type="file" id="photo" for="photo" name="photo" accept=".png,.jpeg,.jpg" onchange='updateFile()' required>
+                    </div>
+                    <p id="file_name"></p>
+                </div>
+                <label for="item name">Item Name</label>
+                <div>
+                    <input type="name" id="name" name="name" autocomplete="off" placeholder="Enter name" required>
+                </div>
+                <label for="item price">Price ($)</label>
+                <div>
+                    <input type="number"  id="price" name="price" step='.01' autocomplete="off" placeholder="Enter price" required>
+                </div>
+                <label for="item description">Description</label>
+                <div>
+                    <textarea name="itemDesc" id="item description" placeholder="Item description" required></textarea>
+                </div>
+                <div><button type="button" id='submitButton' onclick="post()">Post</button></div>
+            </div>
+        </div>
+    </form>
+    
+
+    <script>
+        file_name = document.getElementById('file_name');
+        photo_input = document.getElementById('photo');
+
+        function updateFile() {
+            var filename = photo_input.value.replace(/^.*[\\\/]/, '')
+            file_name.innerHTML = filename;
+        }
+
+        function post() {
+            button = document.getElementById('submitButton');
+            button.disabled=true;
+            if (button.form.reportValidity()) {
+                button.form.submit(); 
+            }
+            else button.disabled=false;
+        }
+        /*
+        document.getElementById('form').addEventListener("submit", async (event) => {
+                //event.preventDefault();
+                const resp = await fetch(event.target.action, {
+                    method: "POST",
+                    body: new URLSearchParams(new FormData(event.target)),
+                });
+                const body = await resp.json();
+                console.log(body);
+            });
+        
+        function singleClick()
+        {
+            setTimeout(function() {
+                document.getElementById('submit').disabled = true;
+                setTimeout(function() {
+                    document.getElementById('submit').disabled = false;
+                    console.log("set");    
+                }, 5000)
+            }, 500)
+        }
+        */
+        
+        
+    </script>
+{% endblock content %}

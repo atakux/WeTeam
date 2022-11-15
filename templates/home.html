@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block content %}
+    <head><link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}"></head>
+    <div>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <br><br>
+                <div class="notification is-danger">
+                    <p style='text-align: center'>{{ messages[0] }}</p>
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+    <div class="background">
+        {% if search_query == "" %}
+            <h2 class="welcome">Showing All Listings</h2>
+        {% elif search_query != None %}
+            <h2 class="welcome">Showing results for "{{ search_query }}"</h2>
+        {% elif user_data == None %}
+            <h1 class="welcome" style='text-align: center'>Welcome to Titan Seller</h1>
+            <h2 class="welcome" style='text-align: center; font-size: 36px;'>Connecting Students Safely</h2>
+        {% else %}
+            <h1 class="welcome">Welcome, {{ user_data['user_name'] }}</h1>
+        {% endif %}
+    </div>
+    <div class="item-list">
+        {% for actual_item in item_list %}
+            <div style="--animation-order: {{ loop.index }};" class="item reveal">
+                <a href="/item/{{ actual_item['item_id'] }}"><img src="{{ url_for('static', filename='images/' + actual_item['item_id']|string + '.png') }}" class="center" style="max-width: 320px; max-height: 180px;"></a>
+                <div class="item-name"><a href="/item/{{ actual_item['item_id'] }}">{{ actual_item['item_name'] }}</a></div>
+                <div class="price">
+                    <div>
+                        <p class="tag">Price: </p>${{ actual_item['item_price'] }}
+                    </div>
+                    <div>
+                        <p class="tag">Seller: </p><a href="/user/{{ actual_item['seller_id'] }}">{{ actual_item['user_name'] }}</a>
+                        <div>
+                        {% for i in range(actual_item['user_score']|round|int) %} <span class="fa fa-star checked"></span> {% endfor %}
+                        {% for i in range(5-(actual_item['user_score']|round|int)) %} <span class="fa fa-star"></span> {% endfor %}    
+                        </div>
+                    </div>
+                    <div>
+                        <p class="tag">Zip Code: </p> {{ actual_item['user_zip'] }}
+                    </div>
+                    
+                </div>
+                <a href="/item/{{ actual_item['item_id'] }}"><button class="purchase button">See More</button></a>
+            </div>
+        {% endfor %}
+    </div>
+    
+    {% if item_list|length < 1 %}
+        <div style="text-align:center;">
+            <h1>No Listed Items</h1>
+            <button class="button" onclick="location.href='/sell'">List Item</button>
+        </div>
+    {% endif %}
+{% endblock content %}

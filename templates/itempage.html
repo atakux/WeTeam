@@ -1,0 +1,61 @@
+{% extends "layout.html"%}
+{% block content %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/item.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>Titan Seller</title>
+</head>
+
+<body>
+    <div class="container">
+        <img class="item-picture" src="{{ url_for('static', filename='images/' + item['item_id']|string + '.png') }}" class="center">
+        <div class="details">
+            <div class="item-name">{{ item['item_name'] }} </div>
+            <div class="price"><p class="tag">Price:</p> ${{ item['item_price'] }}</div>
+            {% if user_id == seller['user_id'] %}
+                <button style="font-size: 22px;" class="button" type="submit" id="btn" onclick='window.location.assign("/manage")'>Edit Item</button>
+            {% elif item['active'] == 1 %}
+                <button style="font-size: 22px;" class="button" type="submit" id="btn" onclick='window.location.assign("/chat/{{ seller['user_id'] }}")'>Message Seller</button>
+            {% else %}
+                <button style="font-size: 22px; background-color: rgba(167, 203, 250);" class="button" id="btn">Item Unavailable</button>
+            {% endif %}
+        </div>
+    </div>
+
+    <h1>Description</h1>
+    <div>
+        <p>{{ item['item_description'] }}</p>
+    </div>
+
+    <div class="seller-info">
+        <iframe width="600" height="450" style="border:0" loading="lazy" allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/directions?key={{ API_KEY }}&origin=place_id%3A{{ user_zip }}&destination=place_id%3A{{ seller_zip }}">
+        </iframe>
+        <div class="seller">
+            <h2>Seller Information</h2>
+            <button style="font-size: 22px;" class="button" type="submit" id="btn" onclick='window.location.assign("/user/{{ seller['user_id'] }}")'>Seller Profile</button>
+            <h3>Username: <label>{{ seller['user_name'] }}</label> </h3>
+            <h3>Rating: 
+                {% for i in range(seller['user_score']|round|int) %} <span class="fa fa-star checked"></span> {% endfor %}
+                {% for i in range(5-(seller['user_score']|round|int)) %} <span class="fa fa-star"></span> {% endfor %}   
+            </h3>
+            {% if distance == 0 %}
+                <h3>Approximate distance: <label>Right around the corner</label> </h3>
+            {% else %}
+                <h3>Approximate distance: <label>{{ distance }} miles</label> </h3>
+            {% endif %}
+        </div>
+        
+    </div>
+</body>
+
+</html>
+{% endblock content %}
