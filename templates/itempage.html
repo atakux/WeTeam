@@ -36,8 +36,7 @@
     </div>
 
     <div class="seller-info">
-        <iframe width="600" height="450" style="border:0" loading="lazy" allowfullscreen
-            referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/directions?key={{ API_KEY }}&origin=place_id%3A{{ user_zip }}&destination=place_id%3A{{ seller_zip }}">
+        <iframe width="600" height="450" style="border:0" loading="lazy" allowfullscreen>
         </iframe>
         <div class="seller">
             <h2>Seller Information</h2>
@@ -47,11 +46,6 @@
                 {% for i in range(seller['user_score']|round|int) %} <span class="fa fa-star checked"></span> {% endfor %}
                 {% for i in range(5-(seller['user_score']|round|int)) %} <span class="fa fa-star"></span> {% endfor %}   
             </h3>
-            {% if distance == 0 %}
-                <h3>Approximate distance: <label>Right around the corner</label> </h3>
-            {% else %}
-                <h3>Approximate distance: <label>{{ distance }} miles</label> </h3>
-            {% endif %}
         </div>
         
     </div>
