@@ -73,10 +73,14 @@ if DATABASE_URL == "sqlite:///database.sql":
 
 app = Flask(__name__)
 
+UPLOAD_FOLDER = 'static/images'
+
 EMAIL_ADDRESS = 'titan.seller02@gmail.com'
 EMAIL_PASSWORD = os.environ['EMAIL_PASSWORD']
 
+# configuartion
 app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = EMAIL_ADDRESS
